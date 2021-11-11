@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class CombatDummyController : MonoBehaviour
 {
@@ -48,13 +48,22 @@ public class CombatDummyController : MonoBehaviour
         CheckKnockBack();
     }
 
-    private void Damage(float amount)
+    private void Damage(float[] attackDetails)
     {
-        currentHealth -= amount;
-        playerFacingDirection = _playerController.GetFacingDirection();
+        currentHealth -= attackDetails[0];
+        
+        // playerFacingDirection = _playerController.GetFacingDirection();
+        if (attackDetails[1] < _aliveGameObject.transform.position.x)
+        {
+            playerFacingDirection = 1;
+        }
+        else
+        {
+            playerFacingDirection = -1;
+        }
 
         Instantiate(hitParticle, _aliveGameObject.transform.position,
-            Quaternion.Euler(0.0f, 0.0f, UnityEngine.Random.Range(0.0f, 360.0f)));
+            Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         
         if (playerFacingDirection == 1)
         {

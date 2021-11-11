@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private float dashTimeLeft;
     private float lastImageXpos;
     private float lastDash = -100f;
+    private float knockBackStartTime;
+
+    [SerializeField] private float knockBackDuration;
 
     private int amountOfJumpsLeft;
     private int facingDirection = 1;
@@ -35,6 +38,9 @@ public class PlayerController : MonoBehaviour
     private bool canClimbLedge = false;
     private bool ledgeDetected;
     private bool isDashing;
+    private bool isKnockBack;
+
+    [SerializeField] private Vector2 knockBackSpeed;
 
     private Vector2 ledgePosBot;
     private Vector2 ledgePos1;
@@ -100,6 +106,7 @@ public class PlayerController : MonoBehaviour
         CheckJump();
         CheckLedgeClimb();
         CheckDash();
+        CheckKnockBack();
     }
 
     private void FixedUpdate()
@@ -117,6 +124,27 @@ public class PlayerController : MonoBehaviour
         else
         {
             isWallSliding = false;
+        }
+    }
+
+    public bool GetDashStatus()
+    {
+        return isDashing;
+    }
+
+    public void KnockBack(int direction)
+    {
+        isKnockBack = true;
+        knockBackStartTime = Time.time;
+        _myRigidbody2D.velocity = new Vector2(knockBackSpeed.x * direction, knockBackSpeed.y);
+    }
+
+    private void CheckKnockBack()
+    {
+        if (Time.time >= knockBackStartTime + knockBackDuration && isKnockBack)
+        {
+            isKnockBack = false;
+            _myRigidbody2D.velocity = new Vector2(0.0f, _myRigidbody2D.velocity.y);
         }
     }
 
@@ -402,11 +430,11 @@ public class PlayerController : MonoBehaviour
     
     private void ApplyMovement()
     {
-        if (!isGrounded && !isWallSliding && movementInputDirection == 0)
+        if (!isGrounded && !isWallSliding && movementInputDirection == 0 && !isKnockBack)
         {
             _myRigidbody2D.velocity = new Vector2(_myRigidbody2D.velocity.x * airDragMultiplier, _myRigidbody2D.velocity.y);
         }
-        else if(canMove)
+        else if(canMove && !isKnockBack)
         {
             _myRigidbody2D.velocity = new Vector2(movementSpeed * movementInputDirection, _myRigidbody2D.velocity.y);
         }
@@ -432,7 +460,7 @@ public class PlayerController : MonoBehaviour
     
     private void Flip()
     {
-        if (!isWallSliding && canFlip && !canClimbLedge)
+        if (!isWallSliding && canFlip && !canClimbLedge && !isKnockBack)
         {
             facingDirection *= -1;
             isFacingRight = !isFacingRight;
