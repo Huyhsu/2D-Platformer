@@ -8,6 +8,7 @@ public class IdleState : State
 
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
+    protected bool isPlayerInMinAggroRange;
 
     protected float idleTime;
     
@@ -16,6 +17,13 @@ public class IdleState : State
         this.stateData = stateData;
     }
 
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        
+        isPlayerInMinAggroRange = entity.CheckPlayerInMinAggroRange();
+    }
+    
     public override void Enter()
     {
         base.Enter();

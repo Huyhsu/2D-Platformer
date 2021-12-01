@@ -18,10 +18,16 @@ public class State
         this.animBoolName = animBoolName;
     }
 
+    public virtual void DoChecks()
+    {
+        
+    }
+    
     public virtual void Enter()
     {
         startTime = Time.time;
         entity.anim.SetBool(animBoolName, true);
+        DoChecks();
     }
 
     public virtual void Exit()
@@ -36,6 +42,6 @@ public class State
 
     public virtual void PhysicsUpdate()
     {
-        
+        DoChecks();
     }
 }
