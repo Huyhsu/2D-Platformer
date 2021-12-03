@@ -59,5 +59,10 @@ public class Enemy1 : Entity
         {
             stateMachine.ChangeState(stunState);
         }
+        else if (!CheckPlayerInMinAggroRange())
+        {
+            lookForPlayerState.SetTurnImmediately(true);
+            stateMachine.ChangeState(lookForPlayerState);
+        }
     }
 }
