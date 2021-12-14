@@ -15,7 +15,7 @@ MonoBehaviour:
   movementVelocity: 10
   jumpVelocity: 20
   amountOfJumps: 1
-  wallJumpVelocity: 20
+  wallJumpVelocity: 10
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.2
@@ -32,6 +32,9 @@ MonoBehaviour:
   dashDrag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImages: 0.5
+  crouchMovementVelocity: 5
+  crouchColliderHeight: 0.8
+  standColliderHeight: 1.6
   groundCheckRadius: 0.3
   wallCheckDistance: 0.5
   whatIsGround:

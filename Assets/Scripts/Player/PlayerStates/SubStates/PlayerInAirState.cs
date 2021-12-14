@@ -158,7 +158,7 @@ public class PlayerInAirState : PlayerState
     {
         if (wallJumpCoyoteTime && Time.time > startWallJumpCoyoteTime + playerData.coyoteTime)
         {
-            
+            wallJumpCoyoteTime = false;
         }
     }
     
