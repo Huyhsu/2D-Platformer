@@ -1,57 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Core : MonoBehaviour
 {
     public Movement Movement
     {
-        get
-        {
-            if (_movement)
-            {
-                return _movement;
-            }
-            
-            Debug.LogError("No Movement Component on " + transform.parent.name);
-            return null;
-        }
-        private set
-        {
-            _movement = value;
-        }
+        get => GenericNotImplementedError<Movement>.TryGet(_movement, transform.parent.name);
+        private set => _movement = value;
     }
 
     public CollisionSenses CollisionSenses
     {
-        get
-        {
-            if (_collisionSenses)
-            {
-                return _collisionSenses;
-            }
-            
-            Debug.LogError("No CollisionSenses Component on " + transform.parent.name);
-            return null;
-        }
-        private set
-        {
-            _collisionSenses = value;
-        }
+        get => GenericNotImplementedError<CollisionSenses>.TryGet(_collisionSenses, transform.parent.name);
+        private set => _collisionSenses = value;
     }
 
+    public Combat Combat
+    {
+        get => GenericNotImplementedError<Combat>.TryGet(_combat, transform.parent.name);
+        private set => _combat = value;
+    }
+    
     private Movement _movement;
     private CollisionSenses _collisionSenses;
+    private Combat _combat;
     
     private void Awake()
     {
         Movement = GetComponentInChildren<Movement>();
         CollisionSenses = GetComponentInChildren<CollisionSenses>();
+        Combat = GetComponentInChildren<Combat>();
     }
 
     public void LogicUpdate()
     {
         Movement.LogicUpdate();
+        Combat.LogicUpdate();
     }
 }

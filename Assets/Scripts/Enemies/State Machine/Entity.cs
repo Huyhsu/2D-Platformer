@@ -58,48 +58,18 @@ public class Entity : MonoBehaviour
         isStunned = false;
         currentStunResistance = entityData.stunResistance;
     }
-    
-    public virtual void Damage(AttackDetails attackDetails)
-    {
-        lastDamageTime = Time.time;
-        currentHealth -= attackDetails.damageAmount;
-        currentStunResistance -= attackDetails.stunDamageAmount;
-        
-        DamageHop(entityData.damageHopSpeed);
 
-        Instantiate(entityData.hitParticle, transform.position,
-            Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
-        
-        if (attackDetails.position.x > transform.position.x)
-        {
-            lastDamageDirection = -1;
-        }
-        else
-        {
-            lastDamageDirection = 1;
-        }
-
-        if (currentStunResistance <= 0)
-        {
-            isStunned = true;
-        }
-
-        if (currentHealth <= 0)
-        {
-            isDead = true;
-        }
-    }
-    
     public virtual void Update()
     {
-       stateMachine.currentState.LogicUpdate();
+        Core.LogicUpdate(); 
+        stateMachine.currentState.LogicUpdate();
        
-       anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
+        anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
 
-       if (Time.time >= lastDamageTime + entityData.stunRecoverTime)
-       {
-           ResetStunResistance();
-       }
+        if (Time.time >= lastDamageTime + entityData.stunRecoverTime)
+        {
+            ResetStunResistance();
+        }
     }
 
     public virtual void FixedUpdate()

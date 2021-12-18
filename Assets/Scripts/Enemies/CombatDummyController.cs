@@ -48,47 +48,47 @@ public class CombatDummyController : MonoBehaviour
         CheckKnockBack();
     }
 
-    private void Damage(AttackDetails attackDetails)
-    {
-        currentHealth -= attackDetails.damageAmount;
-        
-        // playerFacingDirection = _playerController.GetFacingDirection();
-        if (attackDetails.position.x < _aliveGameObject.transform.position.x)
-        {
-            playerFacingDirection = 1;
-        }
-        else
-        {
-            playerFacingDirection = -1;
-        }
-
-        Instantiate(hitParticle, _aliveGameObject.transform.position,
-            Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-        
-        if (playerFacingDirection == 1)
-        {
-            playerOnLeft = true;
-        }
-        else
-        {
-            playerOnLeft = false;
-        }
-
-        _aliveAnimator.SetBool("playerOnLeft", playerOnLeft);
-        _aliveAnimator.SetTrigger("damage");
-
-        if (applyKnockBack && currentHealth > 0.0f)
-        {
-            //KnockBack
-            KnockBack();
-        }
-
-        if (currentHealth <= 0.0f)
-        {
-            //Die
-            Die();
-        }
-    }
+    // private void Damage(AttackDetails attackDetails)
+    // {
+    //     currentHealth -= attackDetails.damageAmount;
+    //     
+    //     // playerFacingDirection = _playerController.GetFacingDirection();
+    //     if (attackDetails.position.x < _aliveGameObject.transform.position.x)
+    //     {
+    //         playerFacingDirection = 1;
+    //     }
+    //     else
+    //     {
+    //         playerFacingDirection = -1;
+    //     }
+    //
+    //     Instantiate(hitParticle, _aliveGameObject.transform.position,
+    //         Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+    //     
+    //     if (playerFacingDirection == 1)
+    //     {
+    //         playerOnLeft = true;
+    //     }
+    //     else
+    //     {
+    //         playerOnLeft = false;
+    //     }
+    //
+    //     _aliveAnimator.SetBool("playerOnLeft", playerOnLeft);
+    //     _aliveAnimator.SetTrigger("damage");
+    //
+    //     if (applyKnockBack && currentHealth > 0.0f)
+    //     {
+    //         //KnockBack
+    //         KnockBack();
+    //     }
+    //
+    //     if (currentHealth <= 0.0f)
+    //     {
+    //         //Die
+    //         Die();
+    //     }
+    // }
 
     private void KnockBack()
     {

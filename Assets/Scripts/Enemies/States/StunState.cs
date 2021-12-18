@@ -45,6 +45,7 @@ public class StunState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        core.Movement.SetVelocity(stateData.knockBackSpeed, stateData.knockBackAngle, entity.lastDamageDirection);
 
         if (Time.time >= startTime + stateData.stunTime)
         {
