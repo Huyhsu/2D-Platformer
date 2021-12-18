@@ -6,7 +6,8 @@ public class State
 {
     protected FiniteStateMachine stateMachine;
     protected Entity entity;
-
+    protected Core core;
+    
     /// <summary>
     /// ?
     /// </summary>
@@ -19,6 +20,7 @@ public class State
         this.entity = entity;
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
+        core = entity.Core;
     }
 
     public virtual void DoChecks()
